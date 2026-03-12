@@ -1,37 +1,16 @@
 
 import { Card, CardContent } from "./ui/card";
 
+import { Card, CardContent } from "./ui/card";
+import { useSiteData } from '@/contexts/SiteContext';
+
 const Portfolio = () => {
-  const cases = [
-    {
-      title: "E-commerce em 30 dias… ou quase",
-      problem: "Uma agência prometeu um e-commerce completo em 30 dias. O cliente pagou 50% adiantado. O que recebeu? Apenas um template gratuito, sem loja, checkout ou integração.",
-      solution: [
-        "Backlog claro com funcionalidades prioritárias",
-        "Critérios de aceite definidos para cada item", 
-        "Roadmap com validações semanais",
-        "Transparência no desenvolvimento"
-      ]
-    },
-    {
-      title: "Site bonito, mas só no desktop",
-      problem: "Uma influenciadora contratou um freelancer com preço atrativo. O visual parecia ótimo no computador, mas o site quebrava no celular, não tinha SEO e não tinha painel de edição de conteúdo.",
-      solution: [
-        "Requisitos não funcionais bem definidos (responsividade, SEO, CMS)",
-        "Validação contínua com o usuário",
-        "Testes antes da entrega final"
-      ]
-    },
-    {
-      title: "Sistema médico que nunca existiu",
-      problem: "Um investidor contratou uma equipe para um sistema de agendamento médico. Durante semanas, recebeu apenas vídeos simulando a interface, mas o sistema nunca existiu de verdade.",
-      solution: [
-        "MVP funcional testável, mesmo que simples",
-        "Acompanhamento por sprints e reuniões de review",
-        "Backlog visível com status atualizado"
-      ]
-    }
-  ];
+  const { siteData } = useSiteData();
+
+  const scrollToContact = () => {
+    const element = document.querySelector("#contact");
+    if (element) element.scrollIntoView({ behavior: 'smooth' });
+  };
 
   return (
     <section id="portfolio" className="py-16 sm:py-20 lg:py-24 bg-white">
@@ -52,19 +31,19 @@ const Portfolio = () => {
         </div>
 
         <div className="grid grid-cols-1 gap-8 max-w-4xl mx-auto">
-          {cases.map((caso, index) => (
-            <Card key={index} className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white to-medraup-gray-light">
+          {siteData.portfolioItems.map((item) => (
+            <Card key={item.id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white to-medraup-gray-light">
               <CardContent className="p-6 sm:p-8">
                 <div className="mb-6">
                   <span className="inline-block bg-red-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                    Caso {index + 1}
+                    Case #{siteData.portfolioItems.findIndex(p => p.id === item.id) + 1}
                   </span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 leading-tight">{caso.title}</h3>
-                  
+                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 leading-tight">{item.title}</h3>
+
                   <div className="mb-6">
                     <h4 className="font-semibold text-red-600 mb-3 text-base">⚠️ Situação:</h4>
                     <p className="text-gray-600 leading-relaxed bg-red-50 p-4 sm:p-6 rounded-lg border-l-4 border-red-500 text-base">
-                      {caso.problem}
+                      {item.problem}
                     </p>
                   </div>
                 </div>
@@ -72,7 +51,7 @@ const Portfolio = () => {
                 <div>
                   <h4 className="font-semibold text-medraup-blue mb-3 text-base">✅ Com um PO no projeto:</h4>
                   <div className="space-y-3 bg-green-50 p-4 sm:p-6 rounded-lg border-l-4 border-green-500">
-                    {caso.solution.map((solution, solutionIndex) => (
+                    {item.solution.map((solution, solutionIndex) => (
                       <div key={solutionIndex} className="flex items-start text-gray-700 text-base">
                         <div className="w-2 h-2 bg-medraup-orange rounded-full mr-3 mt-2 flex-shrink-0"></div>
                         <span className="leading-relaxed">{solution}</span>
@@ -111,11 +90,8 @@ const Portfolio = () => {
             ✨ Eu sou <strong>Loyanne Medrado</strong>, PO e fundadora da <strong>Medraup</strong>.<br/>
             Ajudo negócios a tirarem ideias do papel com entregas reais, funcionais e seguras.
           </p>
-          <button 
-            onClick={() => {
-              const element = document.querySelector("#contact");
-              if (element) element.scrollIntoView({ behavior: 'smooth' });
-            }}
+          <button
+            onClick={scrollToContact}
             className="w-full sm:w-auto bg-medraup-orange hover:bg-medraup-orange/90 text-white px-8 py-4 rounded-lg font-semibold text-lg transition-all duration-200 transform hover:scale-105 min-h-[56px]"
           >
             🔗 Me chama para conversar!

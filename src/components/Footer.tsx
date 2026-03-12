@@ -1,8 +1,19 @@
 
 import { Linkedin, Instagram, MessageCircle } from "lucide-react";
+import { useSiteData } from '@/contexts/SiteContext';
 
 const Footer = () => {
+  const { siteData } = useSiteData();
   const currentYear = new Date().getFullYear();
+
+  const getIcon = (iconName: string) => {
+    switch (iconName) {
+      case 'linkedin': return <Linkedin className="w-6 h-6 text-white" />;
+      case 'instagram': return <Instagram className="w-6 h-6 text-white" />;
+      case 'whatsapp': return <MessageCircle className="w-6 h-6 text-white" />;
+      default: return <MessageCircle className="w-6 h-6 text-white" />;
+    }
+  };
 
   return (
     <footer className="bg-medraup-blue-dark text-white py-12 sm:py-16">
@@ -12,33 +23,20 @@ const Footer = () => {
           <div className="sm:col-span-2 lg:col-span-1">
             <h3 className="text-2xl sm:text-3xl font-bold mb-4">Medraup</h3>
             <p className="text-blue-200 mb-6 leading-relaxed text-base sm:text-lg">
-              Transformando ideias em produtos digitais de sucesso através de metodologias ágeis e gestão estratégica.
+              {siteData.footer.description}
             </p>
             <div className="flex space-x-4">
-              <a 
-                href="https://www.linkedin.com/in/loyannemedradoproductowner" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-12 h-12 bg-medraup-orange rounded-lg flex items-center justify-center hover:bg-medraup-orange/90 transition-colors"
-              >
-                <Linkedin className="w-6 h-6 text-white" />
-              </a>
-              <a 
-                href="https://www.instagram.com/medraup?igsh=MWVuMnJsY2s3OTBoZA==" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-12 h-12 bg-medraup-orange rounded-lg flex items-center justify-center hover:bg-medraup-orange/90 transition-colors"
-              >
-                <Instagram className="w-6 h-6 text-white" />
-              </a>
-              <a 
-                href="https://wa.me/5531986274984" 
-                target="_blank" 
-                rel="noopener noreferrer"
-                className="w-12 h-12 bg-medraup-orange rounded-lg flex items-center justify-center hover:bg-medraup-orange/90 transition-colors"
-              >
-                <MessageCircle className="w-6 h-6 text-white" />
-              </a>
+              {siteData.footer.socials.map((social, index) => (
+                <a
+                  key={index}
+                  href={social.href}
+                  target="_blank"
+                  rel="noopener noreferrer"
+                  className="w-12 h-12 bg-medraup-orange rounded-lg flex items-center justify-center hover:bg-medraup-orange/90 transition-colors"
+                >
+                  {getIcon(social.icon)}
+                </a>
+              ))}
             </div>
           </div>
 
@@ -57,9 +55,9 @@ const Footer = () => {
           <div>
             <h4 className="text-lg sm:text-xl font-semibold mb-4">Contato</h4>
             <div className="space-y-3 text-blue-200 text-base">
-              <p className="break-all">loyannemedrado@hotmail.com</p>
-              <p>(31) 98627-4984</p>
-              <p>São Paulo, SP</p>
+              <p className="break-all">{siteData.footer.contacts.email}</p>
+              <p>{siteData.footer.contacts.phone}</p>
+              <p>{siteData.footer.contacts.location}</p>
             </div>
           </div>
         </div>

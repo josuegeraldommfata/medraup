@@ -2,8 +2,10 @@
 import { useState, useEffect } from "react";
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
+import { useSiteData } from '@/contexts/SiteContext';
 
 const Header = () => {
+  const { siteData } = useSiteData();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 
@@ -11,17 +13,10 @@ const Header = () => {
     const handleScroll = () => {
       setIsScrolled(window.scrollY > 50);
     };
-    
+
     window.addEventListener('scroll', handleScroll);
     return () => window.removeEventListener('scroll', handleScroll);
   }, []);
-
-  const menuItems = [
-    { label: "Início", href: "#home" },
-    { label: "Serviços", href: "#services" },
-    { label: "Portfólio", href: "#portfolio" },
-    { label: "Contato", href: "#contact" }
-  ];
 
   const scrollToSection = (href: string) => {
     const element = document.querySelector(href);
@@ -32,10 +27,10 @@ const Header = () => {
   };
 
   return (
-    <header 
+    <header
       className={`fixed top-0 left-0 right-0 z-50 transition-all duration-300 ${
-        isScrolled 
-          ? 'bg-medraup-blue/95 backdrop-blur-md shadow-lg' 
+        isScrolled
+          ? 'bg-medraup-blue/95 backdrop-blur-md shadow-lg'
           : 'bg-medraup-blue shadow-md'
       }`}
     >
@@ -43,16 +38,16 @@ const Header = () => {
         <div className="flex items-center justify-between h-24 sm:h-28 lg:h-32">
           {/* Logo */}
           <div className="flex-shrink-0">
-            <img 
-              src="/lovable-uploads/6b632b81-e47a-4865-8474-8c8bf273eac9.png" 
-              alt="Medraup Logo" 
+            <img
+              src={siteData.logoUrl}
+              alt="Medraup Logo"
               className="h-20 sm:h-24 lg:h-28 w-auto"
             />
           </div>
 
           {/* Desktop Menu */}
           <nav className="hidden md:flex items-center space-x-6 lg:space-x-8">
-            {menuItems.map((item) => (
+            {siteData.menuItems.map((item) => (
               <button
                 key={item.label}
                 onClick={() => scrollToSection(item.href)}
@@ -61,7 +56,7 @@ const Header = () => {
                 {item.label}
               </button>
             ))}
-            <Button 
+            <Button
               onClick={() => scrollToSection("#contact")}
               className="bg-medraup-orange hover:bg-medraup-orange/90 text-white text-sm lg:text-base px-4 lg:px-6 py-2"
               size="sm"
@@ -83,7 +78,7 @@ const Header = () => {
         {isMenuOpen && (
           <div className="md:hidden absolute top-full left-0 right-0 bg-medraup-blue border-t shadow-lg animate-slide-down">
             <nav className="container mx-auto px-3 py-4">
-              {menuItems.map((item) => (
+              {siteData.menuItems.map((item) => (
                 <button
                   key={item.label}
                   onClick={() => scrollToSection(item.href)}
@@ -92,7 +87,7 @@ const Header = () => {
                   {item.label}
                 </button>
               ))}
-              <Button 
+              <Button
                 onClick={() => scrollToSection("#contact")}
                 className="w-full mt-3 bg-medraup-orange hover:bg-medraup-orange/90 text-white font-medium"
               >

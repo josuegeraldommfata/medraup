@@ -1,7 +1,6 @@
 
 import { Card, CardContent } from "./ui/card";
 
-import { Card, CardContent } from "./ui/card";
 import { useSiteData } from '@/contexts/SiteContext';
 
 const Portfolio = () => {
@@ -34,29 +33,60 @@ const Portfolio = () => {
           {siteData.portfolioItems.map((item) => (
             <Card key={item.id} className="group hover:shadow-xl transition-all duration-300 border-0 bg-gradient-to-br from-white to-medraup-gray-light">
               <CardContent className="p-6 sm:p-8">
-                <div className="mb-6">
-                  <span className="inline-block bg-red-500 text-white px-4 py-2 rounded-full text-sm font-medium mb-4">
-                    Case #{siteData.portfolioItems.findIndex(p => p.id === item.id) + 1}
-                  </span>
-                  <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-4 leading-tight">{item.title}</h3>
+                <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 items-start h-full">
+                  {item.image && (
+                    <div className="md:col-span-2 lg:col-span-1">
+                      <img
+                        src={item.image}
+                        alt={item.title}
+                        className="w-full h-48 object-cover rounded-2xl shadow-2xl group-hover:scale-105 transition-all duration-500"
+                      />
+                    </div>
+                  )}
 
-                  <div className="mb-6">
-                    <h4 className="font-semibold text-red-600 mb-3 text-base">⚠️ Situação:</h4>
-                    <p className="text-gray-600 leading-relaxed bg-red-50 p-4 sm:p-6 rounded-lg border-l-4 border-red-500 text-base">
-                      {item.problem}
-                    </p>
-                  </div>
-                </div>
+                  <div className="space-y-4 md:col-span-2 lg:col-span-2 flex flex-col h-full">
+                    <div className="flex items-center gap-3 mb-4">
+                      <span className="inline-block bg-red-500 text-white px-3 py-1 rounded-full text-xs font-semibold">
+                        Case #{siteData.portfolioItems.findIndex(p => p.id === item.id) + 1}
+                      </span>
+                      {item.link && (
+                        <a
+                          href={item.link}
+                          target="_blank"
+                          rel="noopener noreferrer"
+                          className="inline-flex items-center gap-1 bg-white px-4 py-2 rounded-lg text-medraup-blue hover:bg-medraup-blue hover:text-white font-semibold text-sm shadow-md transition-all duration-200 hover:scale-105 whitespace-nowrap"
+                        >
+                          👁️ Ver Projeto
+                        </a>
+                      )}
+                    </div>
 
-                <div>
-                  <h4 className="font-semibold text-medraup-blue mb-3 text-base">✅ Com um PO no projeto:</h4>
-                  <div className="space-y-3 bg-green-50 p-4 sm:p-6 rounded-lg border-l-4 border-green-500">
-                    {item.solution.map((solution, solutionIndex) => (
-                      <div key={solutionIndex} className="flex items-start text-gray-700 text-base">
-                        <div className="w-2 h-2 bg-medraup-orange rounded-full mr-3 mt-2 flex-shrink-0"></div>
-                        <span className="leading-relaxed">{solution}</span>
+                    <h3 className="text-xl sm:text-2xl font-bold text-gray-900 leading-tight">{item.title}</h3>
+
+                    <div className="space-y-4">
+                      <div>
+                        <h4 className="font-semibold text-red-600 mb-3 text-base flex items-center gap-2">
+                          ⚠️ Situação:
+                        </h4>
+                        <p className="text-gray-700 leading-relaxed bg-red-50 p-4 rounded-xl border-l-4 border-red-400 text-base">
+                          {item.problem}
+                        </p>
                       </div>
-                    ))}
+
+                      <div>
+                        <h4 className="font-semibold text-medraup-blue mb-3 text-base flex items-center gap-2">
+                          ✅ Com um PO no projeto:
+                        </h4>
+                        <div className="space-y-3 bg-green-50 p-4 rounded-xl border-l-4 border-green-400">
+                          {item.solution.map((solution, solutionIndex) => (
+                            <div key={solutionIndex} className="flex items-start gap-3 text-gray-700">
+                              <div className="w-3 h-3 bg-medraup-orange rounded-full mt-2 flex-shrink-0 shadow-sm"></div>
+                              <span className="leading-relaxed text-base">{solution}</span>
+                            </div>
+                          ))}
+                        </div>
+                      </div>
+                    </div>
                   </div>
                 </div>
               </CardContent>

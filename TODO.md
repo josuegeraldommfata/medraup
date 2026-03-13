@@ -1,8 +1,8 @@
-# TODO: Implementar Painel Admin Full Editable
+# TODO: Correção do Erro no Hero.tsx
 
-Status: ✅ Plano aprovado. Iniciando implementação passo a passo.
-
-## Passos do Plano (Marcar com x ao completar):
+- [✅] 1. Editar src/components/Hero.tsx: remover import duplicado do Button + corrigir types
+- [✅] 2. Testar o projeto após edição (erro SyntaxError corrigido, sem erros TS/ESLint no Hero.tsx)
+- [✅] 3. Marcar como concluído
 
 ### 1. Criar estruturas base (types, context) [✅]
 - [ ] src/types/site.ts

@@ -14,6 +14,8 @@ export interface Service {
   title: string;
   description: string;
   features: string[];
+  image?: string; // base64 data URL or path
+  icon?: string; // icon identifier (string)
 }
 
 export interface PortfolioItem {
@@ -51,6 +53,14 @@ export interface SiteData {
       location: string;
     };
   };
+
+  contact?: {
+    title: string;
+    subtitle: string;
+    email: string;
+    whatsapp: string;
+    quickResponse: string;
+  };
 }
 
 // Dados default para init localStorage
@@ -76,25 +86,29 @@ export const defaultSiteData: SiteData = {
       id: '1',
       title: 'Product Owner',
       description: 'Gestão completa do produto desde a concepção até o lançamento, garantindo que sua visão se torne realidade.',
-      features: ['Definição de requisitos', 'Backlog do produto', 'Priorização de funcionalidades', 'Acompanhamento de métricas']
+      features: ['Definição de requisitos', 'Backlog do produto', 'Priorização de funcionalidades', 'Acompanhamento de métricas'],
+      icon: 'briefcase'
     },
     {
       id: '2',
       title: 'Gerência de Projetos',
       description: 'Coordenação eficiente de recursos, prazos e equipes para garantir o sucesso do seu projeto.',
-      features: ['Metodologias ágeis', 'Controle de cronograma', 'Gestão de stakeholders', 'Relatórios de progresso']
+      features: ['Metodologias ágeis', 'Controle de cronograma', 'Gestão de stakeholders', 'Relatórios de progresso'],
+      icon: 'calendar'
     },
     {
       id: '3',
       title: 'Criação de Sites/Plataformas',
       description: 'Desenvolvimento de soluções digitais personalizadas que atendem às suas necessidades específicas.',
-      features: ['Sites responsivos', 'Plataformas web', 'UX/UI strategy', 'Integração de sistemas']
+      features: ['Sites responsivos', 'Plataformas web', 'UX/UI strategy', 'Integração de sistemas'],
+      icon: 'globe'
     },
     {
       id: '4',
       title: 'Consultoria',
       description: 'Análise estratégica e recomendações para otimizar seus processos e produtos digitais.',
-      features: ['Análise de processos', 'Estratégia digital', 'Otimização de workflow', 'Transformação digital']
+      features: ['Análise de processos', 'Estratégia digital', 'Otimização de workflow', 'Transformação digital'],
+      icon: 'monitor'
     }
   ],
   portfolioItems: [
@@ -129,5 +143,13 @@ export const defaultSiteData: SiteData = {
       phone: '(31) 98627-4984',
       location: 'São Paulo, SP'
     }
+  }
+  ,
+  contact: {
+    title: 'Vamos <span className="text-medraup-blue">Conversar?</span>',
+    subtitle: 'Pronta para transformar suas ideias em realidade? Entre em contato e vamos construir algo incrível juntos!',
+    email: 'loyannemedrado@hotmail.com',
+    whatsapp: '(31) 98627-4984',
+    quickResponse: 'Respondo todas as mensagens em até 24 horas. Para urgências, use o WhatsApp!'
   }
 };

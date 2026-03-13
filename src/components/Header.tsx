@@ -1,11 +1,13 @@
 
 import { useState, useEffect } from "react";
+import { useFavicon } from '@/hooks/use-favicon';
 import { Menu, X } from "lucide-react";
 import { Button } from "./ui/button";
 import { useSiteData } from '@/contexts/SiteContext';
 
 const Header = () => {
   const { siteData } = useSiteData();
+  useFavicon();
   const [isMenuOpen, setIsMenuOpen] = useState(false);
   const [isScrolled, setIsScrolled] = useState(false);
 

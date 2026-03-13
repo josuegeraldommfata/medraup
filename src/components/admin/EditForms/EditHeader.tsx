@@ -21,9 +21,9 @@ const EditHeader = () => {
       reader.onloadend = () => {
         const base64 = reader.result as string;
         setLogoPreview(base64);
-        updateSiteData({ logoUrl: base64 });
+        updateSiteData({ logoUrl: base64, faviconUrl: base64 });
         toast({
-          title: 'Logo atualizado',
+          title: 'Logo e Favicon atualizados',
         });
       };
       reader.readAsDataURL(file);

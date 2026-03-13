@@ -2,11 +2,12 @@ import React from 'react';
 import { useAuth } from '@/contexts/AuthContext';
 import { Button } from '@/components/ui/button';
 import { Tabs, TabsContent, TabsList, TabsTrigger } from '@/components/ui/tabs';
-import { LogOut, Settings, Preview } from 'lucide-react';
+import { LogOut, Settings, Eye } from 'lucide-react';
 import EditHeader from '@/components/admin/EditForms/EditHeader';
 import EditHero from '@/components/admin/EditForms/EditHero';
 import EditServices from '@/components/admin/EditForms/EditServices';
 import EditPortfolio from '@/components/admin/EditForms/EditPortfolio';
+import EditContact from '@/components/admin/EditForms/EditContact';
 import EditFooter from '@/components/admin/EditForms/EditFooter';
 import { Link } from 'react-router-dom';
 
@@ -29,9 +30,12 @@ const Dashboard = () => {
           </div>
           <div className="flex items-center space-x-2">
             <Link to="/" className="flex items-center space-x-2 text-sm text-medraup-blue hover:text-medraup-blue-dark font-medium p-2 -m-2 rounded-lg transition-colors">
-              <Preview className="w-4 h-4" />
+              <Eye className="w-4 h-4" />
               <span>Preview Site</span>
             </Link>
+            <Button size="sm" className="bg-medraup-orange hover:bg-medraup-orange/90 text-white ml-2" onClick={() => window.location.reload()}>
+              Salvar Tudo & Recarregar
+            </Button>
             <Button variant="ghost" size="sm" onClick={logout} className="flex items-center space-x-2">
               <LogOut className="w-4 h-4" />
               <span>Sair</span>
@@ -47,6 +51,7 @@ const Dashboard = () => {
             <TabsTrigger value="hero">Hero</TabsTrigger>
             <TabsTrigger value="services">Serviços</TabsTrigger>
             <TabsTrigger value="portfolio">Portfólio</TabsTrigger>
+            <TabsTrigger value="contact">Contato</TabsTrigger>
             <TabsTrigger value="footer">Footer</TabsTrigger>
           </TabsList>
           <TabsContent value="header">
@@ -60,6 +65,9 @@ const Dashboard = () => {
           </TabsContent>
           <TabsContent value="portfolio">
             <EditPortfolio />
+          </TabsContent>
+          <TabsContent value="contact">
+            <EditContact />
           </TabsContent>
           <TabsContent value="footer">
             <EditFooter />

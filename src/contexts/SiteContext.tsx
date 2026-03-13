@@ -1,5 +1,5 @@
 import React, { createContext, useContext, useEffect, useState, ReactNode, useCallback } from 'react';
-import { SiteData, defaultSiteData } from '@/types/site';
+import { SiteData, defaultSiteData, PortfolioItem } from '@/types/site';
 
 interface SiteContextType {
   siteData: SiteData;
@@ -28,7 +28,15 @@ const STORAGE_KEY = 'medraup_site_data' as const;
     const saved = localStorage.getItem(STORAGE_KEY);
     if (saved) {
       try {
-        setSiteData(JSON.parse(saved));
+        const parsed = JSON.parse(saved) as SiteData;
+        // Normaliza links de portfolio antigos (adiciona https:// quando faltar)
+        if (parsed.portfolioItems && Array.isArray(parsed.portfolioItems)) {
+          parsed.portfolioItems = parsed.portfolioItems.map(item => ({
+            ...item,
+            link: item.link ? (/^https?:\/\//i.test(item.link) ? item.link : `https://${item.link}`) : undefined
+          }));
+        }
+        setSiteData(parsed);
       } catch {
         localStorage.setItem(STORAGE_KEY, JSON.stringify(defaultSiteData));
       }
@@ -74,11 +82,11 @@ const STORAGE_KEY = 'medraup_site_data' as const;
     setIsDirty(true);
   };
 
-  const saveSiteData = () => {
+  const saveSiteData = useCallback(() => {
     localStorage.setItem(STORAGE_KEY, JSON.stringify(siteData));
     setIsDirty(false);
-    // toast success
-  };
+    // TODO: integrar toast aqui
+  }, [siteData]);
 
   return (
     <SiteContext.Provider value={{

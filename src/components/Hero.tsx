@@ -2,7 +2,6 @@
 import { Button } from "./ui/button";
 
 import { useSiteData } from '@/contexts/SiteContext';
-import { Button } from "./ui/button";
 import { useCallback } from 'react';
 
 const Hero = () => {
@@ -13,7 +12,7 @@ const Hero = () => {
     if (element) element.scrollIntoView({ behavior: 'smooth' });
   }, []);
 
-  const renderButton = (button: any, index: number) => (
+const renderButton = (button: { label: string; variant: 'default' | 'outline'; action: 'contact' | 'services' }, index: number) => (
     <Button
       key={index}
       size="lg"
@@ -23,7 +22,7 @@ const Hero = () => {
           ? 'bg-medraup-orange hover:bg-medraup-orange/90 text-white'
           : 'border-2 border-medraup-orange text-medraup-orange hover:bg-medraup-orange hover:text-white'
       }`}
-      variant={button.variant as any}
+      variant={button.variant}
     >
       {button.label}
     </Button>

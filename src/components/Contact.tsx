@@ -8,6 +8,7 @@ import { Card, CardContent } from "./ui/card";
 import { useToast } from "@/hooks/use-toast";
 import { Mail, MessageCircle } from "lucide-react";
 import emailjs from '@emailjs/browser';
+import { useSiteData } from '@/contexts/SiteContext';
 
 const Contact = () => {
   const [formData, setFormData] = useState({
@@ -18,10 +19,11 @@ const Contact = () => {
   });
   const [isLoading, setIsLoading] = useState(false);
   const { toast } = useToast();
+  const { siteData } = useSiteData();
 
   const handleSubmit = async (e: React.FormEvent) => {
     e.preventDefault();
-    
+
     // Validação
     if (!formData.name.trim() || !formData.email.trim() || !formData.service || !formData.message.trim()) {
       toast({
@@ -33,7 +35,7 @@ const Contact = () => {
     }
 
     setIsLoading(true);
-    
+
     try {
       // Parâmetros ajustados para seu template Auto-Reply
       const templateParams = {
@@ -64,7 +66,7 @@ const Contact = () => {
           title: "Email enviado com sucesso!",
           description: "Sua mensagem foi enviada. Responderei em breve!",
         });
-        
+
         // Limpar formulário
         setFormData({
           name: "",
@@ -97,12 +99,10 @@ const Contact = () => {
     <section id="contact" className="py-16 sm:py-20 lg:py-24 bg-medraup-gray-light">
       <div className="container mx-auto px-4 sm:px-6 lg:px-8">
         <div className="text-center mb-12 sm:mb-16">
-          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 px-2">
-            Vamos <span className="text-medraup-blue">Conversar?</span>
-          </h2>
+          <h2 className="text-3xl sm:text-4xl lg:text-5xl font-bold text-gray-900 mb-4 px-2" dangerouslySetInnerHTML={{ __html: siteData.contact?.title || 'Vamos <span className="text-medraup-blue">Conversar?</span>' }} />
           <div className="w-20 h-1 bg-medraup-orange mx-auto mb-6"></div>
           <p className="text-lg sm:text-xl text-gray-600 max-w-3xl mx-auto px-4 leading-relaxed">
-            Pronta para transformar suas ideias em realidade? Entre em contato e vamos construir algo incrível juntos!
+            {siteData.contact?.subtitle || 'Pronta para transformar suas ideias em realidade? Entre em contato e vamos construir algo incrível juntos!'}
           </p>
         </div>
 
@@ -112,7 +112,7 @@ const Contact = () => {
             <Card className="border-0 bg-white shadow-lg h-full">
               <CardContent className="p-6 sm:p-8">
                 <h3 className="text-xl sm:text-2xl font-bold text-gray-900 mb-6">Informações de Contato</h3>
-                
+
                 <div className="space-y-6">
                   <div className="flex items-start">
                     <div className="w-12 h-12 bg-medraup-blue rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
@@ -120,17 +120,17 @@ const Contact = () => {
                     </div>
                     <div className="min-w-0 flex-1">
                       <p className="font-semibold text-gray-900 text-base mb-1">Email</p>
-                      <p className="text-gray-600 text-base break-all">loyannemedrado@hotmail.com</p>
+                      <p className="text-gray-600 text-base break-all">{siteData.contact?.email || siteData.footer.contacts.email}</p>
                     </div>
                   </div>
-                  
+
                   <div className="flex items-start">
                     <div className="w-12 h-12 bg-medraup-orange rounded-lg flex items-center justify-center mr-4 flex-shrink-0">
                       <MessageCircle className="w-6 h-6 text-white" />
                     </div>
                     <div>
                       <p className="font-semibold text-gray-900 text-base mb-1">WhatsApp</p>
-                      <p className="text-gray-600 text-base">(31) 98627-4984</p>
+                      <p className="text-gray-600 text-base">{siteData.contact?.whatsapp || siteData.footer.contacts.phone}</p>
                     </div>
                   </div>
                 </div>
@@ -138,7 +138,7 @@ const Contact = () => {
                 <div className="mt-8 p-4 sm:p-6 bg-gradient-to-br from-medraup-blue to-medraup-blue-dark rounded-lg text-white">
                   <h4 className="font-bold mb-2 text-base">Resposta Rápida</h4>
                   <p className="text-blue-100 text-sm leading-relaxed">
-                    Respondo todas as mensagens em até 24 horas. Para urgências, use o WhatsApp!
+                    {siteData.contact?.quickResponse || 'Respondo todas as mensagens em até 24 horas. Para urgências, use o WhatsApp!'}
                   </p>
                 </div>
               </CardContent>
@@ -166,7 +166,7 @@ const Contact = () => {
                         disabled={isLoading}
                       />
                     </div>
-                    
+
                     <div>
                       <label htmlFor="email" className="block text-sm font-medium text-gray-700 mb-2">
                         Email *
@@ -217,8 +217,8 @@ const Contact = () => {
                     />
                   </div>
 
-                  <Button 
-                    type="submit" 
+                  <Button
+                    type="submit"
                     size="lg"
                     className="w-full bg-medraup-blue hover:bg-medraup-blue-dark text-white h-14 text-lg font-semibold"
                     disabled={isLoading}

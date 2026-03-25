@@ -1,0 +1,45 @@
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "postgresql"
+  url      = env("DATABASE_URL")
+}
+
+model SiteConfig {
+  id            Int      @id @default(autoincrement())
+  logoUrl       String?
+  faviconUrl    String?
+  menuItems     Json?    // [{label, href}]
+  hero          Json?    // {title, subtitle, buttons[]}
+  footer        Json?    // {description, socials[], contacts{}}
+  contact       Json?    // {title, subtitle, email, whatsapp, quickResponse}
+  createdAt     DateTime @default(now())
+  updatedAt     DateTime @updatedAt
+}
+
+model Service {
+  id          String   @id @default(cuid())
+  title       String
+  description String
+  features    Json     // string[]
+  image       String?  // base64 or URL
+  icon        String?
+  order       Int      @default(0)
+  createdAt   DateTime @default(now())
+  updatedAt   DateTime @updatedAt
+}
+
+model PortfolioItem {
+  id        String   @id @default(cuid())
+  title     String
+  problem   String
+  solution  Json     // string[]
+  image     String?  // base64
+  link      String?
+  order     Int      @default(0)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+}
+
